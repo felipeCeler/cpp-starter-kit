@@ -68,9 +68,9 @@ SET (SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/GUI/Qt/RCC/Shaders")
              
 SET (DESTINATION "${CMAKE_BINARY_DIR}/build/share/Shaders")
 
-ADD_CUSTOM_TARGET (CopyShaders ALL
-                   DEPENDS ${SOURCE}
-                   COMMENT "Copying Shaders: ${SOURCE} ${DESTINATION}" )
+ADD_CUSTOM_TARGET ( CopyShaders ALL
+                    DEPENDS ${SOURCE}
+                    COMMENT "Copying Shaders: ${SOURCE} ${DESTINATION}" )
                  
 ADD_CUSTOM_COMMAND (
                 TARGET CopyShaders
