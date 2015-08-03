@@ -1,28 +1,32 @@
 #ifndef _MYMAINWINDOW_
 #define _MYMAINWINDOW_
 
-#include <QtGui/QtGui>
+#include <QtWidgets/QMainWindow>
 
 #include "ui_SampleProject.h"
 
 #include <GUI/Qt/GLWidget/GLWidget.hpp>
+#include <GUI/Qt/AboutWidget/AboutWidget.hpp>
 
-class QWorkspace;
 
-class MainWindow: public QMainWindow , private Ui::MainWindow
+class MainWindow: public QMainWindow
 {
 		Q_OBJECT
 
 	public:
 		MainWindow ( QMainWindow *parent = 0 );
+		virtual ~MainWindow ( );
 		void keyPressEvent ( QKeyEvent *e );
 
 	public slots:
 
-
 	private:
 
-		GLWidget* glWidget;
+		Ui::MainWindow 	*ui;
+
+		GLWidget		*glWidget;
+		AboutWidget 	*aboutWidget;
+
 };
 
 #endif

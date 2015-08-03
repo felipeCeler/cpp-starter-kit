@@ -1,28 +1,18 @@
-# Teste
 project(${CMAKE_PROJECT_NAME}_EXE)
 
-set(QT_USE_QTOPENGL true)
-set(QT_USE_QTGUI true)
-set(QT_WRAP_CPP true)
-set(QT_WRAP_UI true)
+find_package(Qt5OpenGL REQUIRED)
+find_package(Qt5Widgets REQUIRED)
 
-# find needed packages
-find_package(Qt4 REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 
-INCLUDE(${QT_USE_FILE})
-
-
 include_directories(
-        ##- Qt     
-        ${QT_INCLUDE_DIR}
-        ${QT_QTCORE_INCLUDE_DIR}
-        ${QT_QTGUI_INCLUDE_DIR}
-        ${QT_QTOPENGL_INCLUDE_DIR}
-        ##- OpenGL 
+        ## - OpenGL 
         ${GLEW_INCLUDE_DIR}
         ${OPENGL_INCLUDE_DIR}
+        ## - Qt5
+        ${Qt5Widgets_INCLUDE_DIRS}
+        ${Qt5OpenGL_INCLUDE_DIRS}
         )
 
 include_directories (
@@ -30,30 +20,35 @@ include_directories (
   ${CMAKE_CURRENT_BINARY_DIR}
 )
 
+## Show all include directories
 get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
 foreach(dir ${dirs})
   message(STATUS "dir='${dir}'")
 endforeach()
 
-set( ${PROJECT_NAME}_SOURCES App/main.cpp 
+set( ${PROJECT_NAME}_SOURCES GUI/Qt/QtSampleProject.cpp  ## File where the main function resides
     						 GUI/Qt/MainWindow/MainWindow.cpp
     						 GUI/Qt/GLWidget/GLWidget.cpp
+    						 GUI/Qt/AboutWidget/AboutWidget.cpp
     						 )
 	
 set( ${PROJECT_NAME}_HEADERS GUI/Qt/MainWindow/MainWindow.hpp
                              GUI/Qt/GLWidget/GLWidget.hpp
+                             GUI/Qt/AboutWidget/AboutWidget.hpp
                             )	
-
+## Q_OBJECT files
 set( MOC_HEADERS GUI/Qt/MainWindow/MainWindow.hpp
-                 GUI/Qt/GLWidget/GLWidget.hpp  )
-                 
-set( UI_SOURCES GUI/Qt/UI/${CMAKE_PROJECT_NAME}.ui )
-
+                 GUI/Qt/GLWidget/GLWidget.hpp
+                 GUI/Qt/AboutWidget/AboutWidget.hpp  
+                 )
+## Qt Designer Ui files                 
+set( UI_SOURCES GUI/Qt/MainWindow/${CMAKE_PROJECT_NAME}.ui GUI/Qt/AboutWidget/AboutWidget.ui )
+## Resources
 set(RCC_SOURCES GUI/Qt/RCC/Resources.qrc)
 
-QT4_WRAP_CPP( MOC_SOURCES ${MOC_HEADERS})
-QT4_WRAP_UI (UI_HEADERS ${UI_SOURCES})
-QT4_ADD_RESOURCES(RCC_HEADERS ${RCC_SOURCES})
+QT5_WRAP_CPP( MOC_SOURCES ${MOC_HEADERS})
+QT5_WRAP_UI (UI_HEADERS ${UI_SOURCES})
+QT5_ADD_RESOURCES(RCC_HEADERS ${RCC_SOURCES})
 
 IF(WIN32)
 	ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} WIN32 ${${PROJECT_NAME}_SOURCES} ${${PROJECT_NAME}_HEADERS} ${MOC_SOURCES} ${UI_HEADERS} ${RCC_HEADERS})
@@ -61,18 +56,4 @@ ELSE(WIN32)
 	ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} ${${PROJECT_NAME}_SOURCES} ${${PROJECT_NAME}_HEADERS} ${MOC_SOURCES} ${UI_HEADERS} ${RCC_HEADERS})	
 ENDIF(WIN32)
               
-TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME} ${QT_LIBRARIES} ${QT_QTMAIN_LIBRARY} ${OPENGL_LIBRARIES} )
-
-# Do a better solution. This one is Ungly !!!
-SET (SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/GUI/Qt/RCC/Shaders")
-             
-SET (DESTINATION "${CMAKE_BINARY_DIR}/build/share/Shaders")
-
-ADD_CUSTOM_TARGET ( CopyShaders ALL
-                    DEPENDS ${SOURCE}
-                    COMMENT "Copying Shaders: ${SOURCE} ${DESTINATION}" )
-                 
-ADD_CUSTOM_COMMAND (
-                TARGET CopyShaders
-                COMMAND ${CMAKE_COMMAND} -E copy_directory ${SOURCE} ${DESTINATION} )   
-
+TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME}   Qt5::OpenGL Qt5::Widgets ${OPENGL_LIBRARIES}  ${GLEW_LIBRARY})

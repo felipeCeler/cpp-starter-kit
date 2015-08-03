@@ -1,5 +1,6 @@
-#include <QApplication>
 #include <iostream>
+
+#include <QtWidgets/QApplication>
 
 #include <GUI/Qt/MainWindow/MainWindow.hpp>
 
@@ -14,9 +15,9 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-	MainWindow * form = new MainWindow;
+	MainWindow form;
 
-	form->show();
+	form.show();
 
     return app.exec();
 }

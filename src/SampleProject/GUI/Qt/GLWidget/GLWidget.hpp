@@ -2,7 +2,6 @@
 #define MYGLFRAME_H
 
 #include <QtOpenGL/QGLWidget>
-#include <QtGui/QMdiSubWindow>
 #include <QtCore/QTimer>
 #include <QtCore/QTimeLine>
 #include <QtCore/QFile>
