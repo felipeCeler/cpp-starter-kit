@@ -1,4 +1,4 @@
-﻿default-qt5-project
+﻿default-qt-project
 ==================
 
-This project is a skeleton of all my projects that use Qt-5.x and OpenGL.
+This project is a skeleton of all my projects that use Qt and OpenGL.
