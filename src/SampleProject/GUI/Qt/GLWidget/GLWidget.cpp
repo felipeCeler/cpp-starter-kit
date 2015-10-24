@@ -15,6 +15,8 @@ GLWidget::GLWidget (  QWidget* parent , const QGLWidget* shareWidget , Qt::Windo
 /// OpenGL
 void GLWidget::initializeGL ( )
 {
+
+	glClearColor(1.0f,0.0,0.0,1.0f);
 }
 
 void GLWidget::resizeGL ( int width , int height )
