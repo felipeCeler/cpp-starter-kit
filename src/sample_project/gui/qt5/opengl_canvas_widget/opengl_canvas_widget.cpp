@@ -6,6 +6,9 @@
  */
 
 
+// glad
+#include <glad/glad.h>
+
 #include "opengl_canvas_widget.hpp"
 
 // Qt5 Framework
@@ -27,10 +30,7 @@ OpenGLCanvasWidget::OpenGLCanvasWidget(QWidget * parent) : QOpenGLWidget(parent)
 
 OpenGLCanvasWidget::~OpenGLCanvasWidget() 
 {
-    if ( s_getProcAddressHelper != nullptr)
-    {
-        delete s_getProcAddressHelper;
-    }   
+    s_getProcAddressHelper == nullptr;
 }
 
 void OpenGLCanvasWidget::mousePressEvent(QMouseEvent *_mouse_event)

@@ -23,7 +23,10 @@ set(META_VERSION_MAJOR       "1")
 set(META_VERSION_MINOR       "0")
 set(META_VERSION_PATCH       "0")
 
-# Set the desired project name
+# 
+# Declare project
+# 
+
 project( ${META_PROJECT_NAME} VERSION 0.1
            DESCRIPTION "Qt5 OpenGL starter kit"
            LANGUAGES C CXX 
@@ -38,24 +41,23 @@ option(BUILD_SHARED_LIBS      "Build shared instead of static libraries."       
 option(OPTION_BUILD_DOCS      "Build documentation."                                   OFF)
 option(OPTION_BUILD_EXAMPLES  "Build examples."                                        OFF)
 
-# 
-# Declare project
-# 
+
 
 # Generate folders for IDE targets (e.g., VisualStudio solutions)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(IDE_FOLDER ${PROJECT_NAME})
-
-# Declare project
-project(${META_PROJECT_NAME} C CXX)
 
 
 # 
 # Project Dependecies
 # 
 
-set(glad_DIR          "${CMAKE_SOURCE_DIR}/libs/glad/install/lib/cmake/glad")
-set(glm_DIR           "${CMAKE_SOURCE_DIR}/libs/glm/src/cmake/glm") 
+#set(glad_DIR          "${CMAKE_SOURCE_DIR}/libs/glad/install/lib/cmake/glad")
+#set(glm_DIR           "${CMAKE_SOURCE_DIR}/libs/glm/src/cmake/glm") 
+
+add_subdirectory(libs/glm/source)
+add_subdirectory(libs/glad/source)
+add_subdirectory(libs/tinyobjloader/source)
 
 ## - Examples using and Qt5
 add_subdirectory(src/sample_project)

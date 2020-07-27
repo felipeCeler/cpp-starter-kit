@@ -6,6 +6,8 @@ set(CMAKE_BUILD_TYPE "DEBUG")
 message(STATUS "Lib ${target} as ${CMAKE_BUILD_TYPE}")
 
 find_package(Qt5 COMPONENTS Widgets Gui REQUIRED)
+#find_package(glad REQUIRED NO_MODULE)
+#find_package(glm REQUIRED NO_MODULE)
 
 
 # Enable automoc
@@ -65,7 +67,7 @@ set_target_properties(${target}
       # Example: extension .exe
       OUTPUT_NAME ${target} 
       SUFFIX ".bin"
-      PREFIX "qt5"
+      PREFIX "qt5-"
       CXX_STANDARD 17
         
     ARCHIVE_OUTPUT_DIRECTORY "${OUTPUT}/data"
@@ -93,7 +95,8 @@ target_link_libraries(${target}
         Qt5::Gui
         Qt5::Widgets  
         glm::glm
-        glad::glad
+        dl
+        glad
 )
 
 
@@ -132,7 +135,7 @@ target_link_libraries(${target}
 )
 
 
-set (assets_source "${CMAKE_CURRENT_SOURCE_DIR}/assets")
+set (assets_source "${CMAKE_CURRENT_SOURCE_DIR}/gui/qt5/assets")
              
 set (assets_destination "${OUTPUT}/bin/assets")
 

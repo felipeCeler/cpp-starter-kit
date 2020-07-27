@@ -5,8 +5,8 @@
 #include <QtWidgets/QDockWidget>
 
 #include "gui/qt5/about_widget/about_widget.hpp"
-
 #include "gui/qt5/opengl_canvas_widget/opengl_canvas_widget.hpp"
+
 namespace Ui
 {
     class MainWindowForm;

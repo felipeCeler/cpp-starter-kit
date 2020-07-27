@@ -12,8 +12,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>883</width>
-    <height>619</height>
+    <width>192</width>
+    <height>255</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -36,7 +36,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../icons.qrc">:/assets/icons/celerGL.png</pixmap>
+          <pixmap resource="../icons.qrc">:/assets/icons/celer_system.svg</pixmap>
          </property>
         </widget>
        </item>

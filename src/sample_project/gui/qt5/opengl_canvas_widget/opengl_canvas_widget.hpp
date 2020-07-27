@@ -8,9 +8,6 @@
 #ifndef _QT5_OPENGLCANVASWIDGET_HPP_
 #define _QT5_OPENGLCANVASWIDGET_HPP_
 
-// Celer Library
-#include <celer/opengl/shader_manager.hpp>
-
 // Standard Library
 #include <memory>
 

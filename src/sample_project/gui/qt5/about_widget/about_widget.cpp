@@ -1,4 +1,4 @@
-#include "about_widget/about_widget.hpp"
+#include "about_widget.hpp"
 
 #include "ui_about_widget_form.h"
 
