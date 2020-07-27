@@ -1,5 +1,5 @@
 <RCC>
   <qresource prefix="/">
-    <file>Icons/celerSystem.svg</file>
+    <file>Icons/celer_system.svg</file>
    </qresource>
 </RCC>

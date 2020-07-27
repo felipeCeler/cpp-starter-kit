@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>MainWindowForm</class>
+ <widget class="QMainWindow" name="MainWindowForm">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Celer System</string>
+   <string>Celer Systems</string>
   </property>
   <widget class="QWidget" name="centralwidget"/>
   <widget class="QMenuBar" name="menubar">
@@ -20,7 +20,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>39</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -59,7 +59,7 @@
   <connection>
    <sender>action_Quit_</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>MainWindowForm</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">

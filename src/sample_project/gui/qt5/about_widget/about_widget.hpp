@@ -3,17 +3,20 @@
 
 #include <QtWidgets/QDialog>
 
-#include "ui_AboutWidget.h"
+namespace Ui
+{
+    class AboutWidgetForm;
+}
 
 class AboutWidget: public QDialog
 {
 		Q_OBJECT
 	public:
 		AboutWidget ( QWidget *parent = 0 );
-		virtual ~AboutWidget ( );
+		~AboutWidget ( ) = default;
 	private:
 
-		Ui::AboutDialog * ui;
+		Ui::AboutWidgetForm * ui;
 
 };
 
