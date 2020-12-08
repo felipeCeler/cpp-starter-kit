@@ -47,6 +47,8 @@ option(OPTION_BUILD_EXAMPLES  "Build examples."                                 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(IDE_FOLDER ${PROJECT_NAME})
 
+set ( GLAD_CELER_VERSION "glad-0.1.34")
+set ( GLM_CELER_VERSION "glm-0.9.9.8")
 
 # 
 # Project Dependecies
@@ -55,8 +57,8 @@ set(IDE_FOLDER ${PROJECT_NAME})
 #set(glad_DIR          "${CMAKE_SOURCE_DIR}/libs/glad/install/lib/cmake/glad")
 #set(glm_DIR           "${CMAKE_SOURCE_DIR}/libs/glm/src/cmake/glm") 
 
-add_subdirectory(libs/glm/source)
-add_subdirectory(libs/glad/source)
+add_subdirectory(libs/glm/source/${GLM_CELER_VERSION})
+add_subdirectory(libs/glad/source/${GLAD_CELER_VERSION})
 add_subdirectory(libs/tinyobjloader/source)
 
 ## - Examples using and Qt5
