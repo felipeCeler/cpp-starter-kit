@@ -12,19 +12,19 @@ int main(int argc, char *argv[])
 {
     /// Selecting the Desktop Driver instead the software one
     /// @see https://forum.qt.io/topic/51574/opengl-dynamic-selected-driver/3
-    QApplication::setAttribute ( Qt::AA_UseDesktopOpenGL );
-    QApplication::setAttribute ( Qt::AA_DontCreateNativeWidgetSiblings );
-    
+    QApplication::setAttribute ( Qt::AA_UseDesktopOpenGL );    
 
     // FIXME For some how, systems with dual GPU don't work with this line.
-    QSurfaceFormat format;
-        format.setDepthBufferSize(24);
-        format.setVersion(4, 3);
-        // If CompatibilityProfile, it will use the lasted version Ex: 4.6 if possible
-        format.setProfile(QSurfaceFormat::CompatibilityProfile);
-        format.setRenderableType ( QSurfaceFormat::OpenGL );
-        format.setSamples ( 16 );
-        QSurfaceFormat::setDefaultFormat ( format );
+     QSurfaceFormat format;
+    //     format.setDepthBufferSize(24);
+         format.setVersion(3, 3);
+    //     // If CompatibilityProfile, it will use the lasted version Ex: 4.6 if possible
+    //     //format.setProfile(QSurfaceFormat::CompatibilityProfile);
+         format.setProfile(QSurfaceFormat::CoreProfile);
+         format.setRenderableType ( QSurfaceFormat::OpenGL );
+    //     format.setSwapBehavior(QSurfaceFormat::DoubleBuffer);
+    //     format.setSamples ( 16 );
+         QSurfaceFormat::setDefaultFormat ( format );
 
     QApplication app ( argc , argv );
 

@@ -18,19 +18,14 @@
 #include <QtGui/QOpenGLContext>
 
 
-OpenGLCanvasWidget * OpenGLCanvasWidget::s_getProcAddressHelper = nullptr;
-
 OpenGLCanvasWidget::OpenGLCanvasWidget(QWidget * parent) : QOpenGLWidget(parent) 
 {
-    if (!s_getProcAddressHelper)
-    {
-        s_getProcAddressHelper = this;
-    }
+    
 }
 
 OpenGLCanvasWidget::~OpenGLCanvasWidget() 
 {
-    s_getProcAddressHelper == nullptr;
+
 }
 
 void OpenGLCanvasWidget::mousePressEvent(QMouseEvent *_mouse_event)
@@ -62,7 +57,11 @@ void OpenGLCanvasWidget::initializeGL ( )
 {    
     
     // print some gl infos (query)
-    gladLoadGLLoader((GLADloadproc) getProcAddress);
+    if (!gladLoadGL()) {
+        // you need an OpenGL context before loading glad
+        printf("I did load GL with no context!\n");
+        exit(1);
+    }
 
     auto context = this->context();
 
@@ -88,19 +87,3 @@ void OpenGLCanvasWidget::resizeGL ( int _width , int _height )
     glViewport( 0, 0, _width, _height);	
 }
 
-ProcAddress OpenGLCanvasWidget::getProcAddress(const char * name)
-{
-    if (!s_getProcAddressHelper || name == nullptr)
-    {
-        return nullptr;
-    }
-
-    const auto symbol = std::string(name);
-
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
-    const auto qtSymbol = QByteArray::fromStdString(symbol);
-#else
-    const auto qtSymbol = QByteArray::fromRawData(symbol.c_str(), symbol.size());
-#endif
-    return s_getProcAddressHelper->context()->getProcAddress(qtSymbol);
-}

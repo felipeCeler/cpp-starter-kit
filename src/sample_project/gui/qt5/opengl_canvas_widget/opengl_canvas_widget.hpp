@@ -41,9 +41,7 @@ class OpenGLCanvasWidget: public QOpenGLWidget
                 void keyPressEvent ( QKeyEvent* _key_event ) override;                      
 
         private:            
-              
-            static OpenGLCanvasWidget * s_getProcAddressHelper;
-            static ProcAddress getProcAddress(const char * name);       
+                             
             
 };
 
