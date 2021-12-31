@@ -13,3 +13,6 @@ libs/**/install/*
 
 # exception to the rule
 !libs/**/install/.gitkeep
+
+# cmake generated files
+src/**/cmake/*.cmake.in
