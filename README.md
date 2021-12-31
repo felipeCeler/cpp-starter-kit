@@ -15,7 +15,7 @@ cpp-starter-kit
 │   ├── glm
 │   └── tinyobjloader
 └── src
-    └── smaple-project*
+    └── sample-project*
         ├── cmake
         │   └── sample-project.config.cmake.in*
         ├── gui
