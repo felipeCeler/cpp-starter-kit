@@ -1,4 +1,4 @@
-﻿default-qt-project
+﻿cpp-starter-kit
 ==================
 
-This repository is a skeleton for all my projects which uses Qt and OpenGL.
+This repository is a skeleton for cpp project using Qt5 and OpenGL.
