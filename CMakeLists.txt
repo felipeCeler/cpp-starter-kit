@@ -1,6 +1,11 @@
 # CMake version
 # Template based on cmake-init project @see https://github.com/cginternals/cmake-init
-cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.15...3.17 FATAL_ERROR)
+
+# Maybe stop from "CMaKeing" in the wrong place
+if (CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
+    message(FATAL_ERROR "Source and build directories cannot be the same. Use the /build directory.")
+endif()
 
 #
 # Configure CMake environment
@@ -14,22 +19,30 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_INIT_PATH}/cmake")
 # 
 
 # Meta information about the project
-set(META_PROJECT_NAME        "default-qt5")
-set(META_PROJECT_DESCRIPTION "Qt5 OpenGL Project Template")
-set(META_AUTHOR_ORGANIZATION "Celer System")
-set(META_AUTHOR_DOMAIN       "https://www.felipedecarvalho.com")
-set(META_AUTHOR_MAINTAINER   "felipe.celer@gmail.com")
+set(META_PROJECT_NAME        "sample-project")
+#set(META_API_NAME            "SAMPLE-PROJECT_API_EXPORT")
+set(META_PROJECT_DESCRIPTION "Sample Project Start Kit")
+set(META_AUTHOR_ORGANIZATION "Hops System")
+set(META_AUTHOR_DOMAIN       "https://www.myself.me")
+set(META_AUTHOR_MAINTAINER   "me@myself.me")
 set(META_VERSION_MAJOR       "1")
 set(META_VERSION_MINOR       "0")
 set(META_VERSION_PATCH       "0")
+set(META_VERSION             "${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH}")
+set(META_NAME_VERSION        "${META_PROJECT_NAME} v${META_VERSION} (${META_VERSION_REVISION})")
 
 # 
 # Declare project
 # 
 
-project( ${META_PROJECT_NAME} VERSION 0.1
-           DESCRIPTION "Qt5 OpenGL starter kit"
-           LANGUAGES C CXX 
+# Generate folders for IDE targets (e.g., VisualStudio solutions)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+set(IDE_FOLDER ${META_PROJECT_NAME})
+
+project(${META_PROJECT_NAME} 
+        VERSION ${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH}
+        DESCRIPTION ${META_PROJECT_DESCRIPTION}
+        LANGUAGES C CXX 
         )
 
 # 
@@ -37,32 +50,21 @@ project( ${META_PROJECT_NAME} VERSION 0.1
 # 
 
 # Project options
-option(BUILD_SHARED_LIBS      "Build shared instead of static libraries."              OFF)
+option(BUILD_SHARED_LIBS      "Build shared instead of static libraries."              ON)
 option(OPTION_BUILD_DOCS      "Build documentation."                                   OFF)
-option(OPTION_BUILD_EXAMPLES  "Build examples."                                        OFF)
+option(OPTION_BUILD_EXAMPLES  "Build examples."                                        ON)
 
 
+# Rename project folder into META_PROJECT_NAME
+file(GLOB project_name RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} src/*)
 
-# Generate folders for IDE targets (e.g., VisualStudio solutions)
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-set(IDE_FOLDER ${PROJECT_NAME})
+if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/${META_PROJECT_NAME})
+        file(RENAME ${CMAKE_CURRENT_SOURCE_DIR}/${project_name} ${CMAKE_CURRENT_SOURCE_DIR}/src/${META_PROJECT_NAME})
+endif()
 
-set ( GLAD_CELER_VERSION "glad-0.1.34")
-set ( GLM_CELER_VERSION "glm-0.9.9.8")
-
-# 
-# Project Dependecies
-# 
-
-#set(glad_DIR          "${CMAKE_SOURCE_DIR}/libs/glad/install/lib/cmake/glad")
-#set(glm_DIR           "${CMAKE_SOURCE_DIR}/libs/glm/src/cmake/glm") 
-
-add_subdirectory(libs/glm/source/${GLM_CELER_VERSION})
-add_subdirectory(libs/glad/source/${GLAD_CELER_VERSION})
-add_subdirectory(libs/tinyobjloader/source)
+# Build third party libraries
+include(lib/third_party.cmake)
 
 ## - Examples using and Qt5
-add_subdirectory(src/sample_project)
-
-
+add_subdirectory(src/${META_PROJECT_NAME})
 
