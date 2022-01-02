@@ -11,7 +11,7 @@ The name of the project* is defined by the variable META_PROJECT_NAME on the roo
 │   ├── build
 │   ├── cmake
 │   ├── files
-│   ├── libs (Third Party Libraries)/
+│   ├── libs (_Third Party Libraries_)/
 │   │   ├── glad
 │   │   ├── glm
 │   │   └── tinyobjloader
@@ -20,9 +20,9 @@ The name of the project* is defined by the variable META_PROJECT_NAME on the roo
 │           ├── cmake/
 │           │   └── sample-project.config.cmake.in*
 │           ├── gui
-│           └── CMakeLists.txt (Project Itself)
+│           └── CMakeLists.txt (_Project Itself_)
 ├── .gitignore
-├── CMakeLists.txt (Meta Project Information)
+├── CMakeLists.txt (_Meta Project Information_)
 └── README.md
 ```
 
