@@ -3,7 +3,7 @@
 
 This repository is a skeleton for cpp project using Qt5 and OpenGL.
 
-The name of the project* is defined by the variable META_PROJECT_NAME on the root CMakeLists.txt file. When modified, the "sample-project" name and  "sample-project.config.cmake.in" will be update accordingly.
+The name of the project* is defined by the variable META_PROJECT_NAME on the root CMakeLists.txt file. When modified, the "_sample-project_" name and  "_sample-project.config.cmake.in_" will be update accordingly.
 
 ```bash
 .
