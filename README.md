@@ -28,3 +28,4 @@ The name of the project* is defined by the variable META_PROJECT_NAME on the roo
 
 ### Reference
 - Tree code -  https://tree.nathanfriend.io/ and Markdown bash code - https://newbedev.com/is-there-a-way-to-represent-a-directory-tree-in-a-github-readme-md
+- cmake-init - https://github.com/cginternals/cmake-init
