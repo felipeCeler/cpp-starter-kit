@@ -27,7 +27,7 @@ The name of the project* is defined by the variable META_PROJECT_NAME on the roo
 ```
 
 You can use:
-git archive --format zip --output /full/path/to/zipfile.zip master
+<code>git archive --format zip --output /full/path/to/zipfile.zip master</code>
 to create a zip file of the project.
 
 ### Reference
