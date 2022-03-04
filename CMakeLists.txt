@@ -12,7 +12,7 @@ endif()
 #
 
 # Include cmake modules
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_INIT_PATH}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # 
 # Project description and (meta) information
@@ -63,7 +63,7 @@ if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/${META_PROJECT_NAME})
 endif()
 
 # Build third party libraries
-include(lib/third_party.cmake)
+include(libs/third_party.cmake)
 
 ## - Examples using and Qt5
 add_subdirectory(src/${META_PROJECT_NAME})

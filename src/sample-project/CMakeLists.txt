@@ -198,6 +198,7 @@ target_link_libraries(${target}
 
 ## Header files
 include(GNUInstallDirs)
+include(InstallRequiredSystemLibraries)
 
 install(TARGETS ${target} 
     EXPORT 
@@ -205,25 +206,25 @@ install(TARGETS ${target}
     ARCHIVE 
         DESTINATION ${CMAKE_INSTALL_LIBDIR}
         COMPONENT Runtime
-    LIBRARY 
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        COMPONENT Runtime
-        NAMELINK_COMPONENT Development
     RUNTIME 
         DESTINATION ${CMAKE_INSTALL_BINDIR}
         COMPONENT Runtime
-    INCLUDES 
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-    PUBLIC_HEADER 
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
-install(EXPORT ${target}-targets
-    FILE ${target}-targets.cmake
-    NAMESPACE ${target}::
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${target}
-    COMPONENT   dev
-)
+# Using this solution - @see https://blog.nathanosman.com/2017/11/24/using-windeployqt-with-cpack.html
+# Similar solution - @see https://stackoverflow.com/questions/41193584/deploy-all-qt-dependencies-when-building
+if(WIN32)
+    include(WinQt5Deploy)
+    windeployqt(${target} ${CMAKE_INSTALL_BINDIR})
+elseif(LINUX)
+    message("Download and compiler it. You are smart =) ..")
+elseif(APPLE)
+    message("Really ..")
+else()
+    message("Where you are ? ..")
+endif()
+
+
 
 include(CMakePackageConfigHelpers)
 
@@ -239,14 +240,3 @@ write_basic_package_version_file(
     COMPATIBILITY AnyNewerVersion
 )
 
-install(
-    FILES
-        ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${target}-config.cmake
-        ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${target}-config-version.cmake
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${target}
-)
-
-install(
-    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${target}     
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)

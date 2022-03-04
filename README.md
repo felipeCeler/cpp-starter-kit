@@ -26,5 +26,9 @@ Default folder structure. The name of the project* is defined by the variable ME
 └── README.md
 ```
 
+You can use:
+git archive --format zip --output /full/path/to/zipfile.zip master
+to create a zip file of the project.
+
 ### Reference
 - Tree code -  https://tree.nathanfriend.io/ and Markdown bash code - https://newbedev.com/is-there-a-way-to-represent-a-directory-tree-in-a-github-readme-md
