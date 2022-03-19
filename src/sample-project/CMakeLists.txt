@@ -114,6 +114,9 @@ set_target_properties(${target}
       ARCHIVE_OUTPUT_DIRECTORY "${OUTPUT}/data"
       LIBRARY_OUTPUT_DIRECTORY "${OUTPUT}/lib"
       RUNTIME_OUTPUT_DIRECTORY "${OUTPUT}/bin"
+
+      # Qt5 Properties
+      WIN32_EXECUTABLE TRUE
 )
 
 
@@ -160,7 +163,13 @@ target_compile_definitions(${target}
     INTERFACE
 )
 
-target_compile_features(${target} PUBLIC )
+target_compile_features(${target} 
+    PRIVATE
+    
+    PUBLIC    
+    
+    INTERFACE
+)
 
 # 
 # Compile options
