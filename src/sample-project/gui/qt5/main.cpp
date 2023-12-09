@@ -6,7 +6,7 @@
 #include <iostream>
 
 // Self
-#include "gui/qt5/main_window/main_window.hpp"
+#include "main_window/main_window.hpp"
 
 int main(int argc, char *argv[])
 {

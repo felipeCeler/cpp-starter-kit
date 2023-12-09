@@ -20,11 +20,17 @@ The name of the project* is defined by the variable META_PROJECT_NAME on the roo
 │           ├── cmake/
 │           │   └── sample-project.config.cmake.in*
 │           ├── gui
-│           └── CMakeLists.txt (Project Itself)
+│           └── CMakeLists.txt (For each gui type project itself)
 ├── .gitignore
 ├── CMakeLists.txt (Meta Project Information)
 └── README.md
 ```
+
+# Build without preset
+Debug or Release
+cmake -B build/Debug -GNinja -DCMAKE_BUILD_TYPE=Debug && cmake --build .\build\Debug
+
+# Build with preset
 
 You can use:
 <code>git archive --format zip --output /full/path/to/zipfile.zip master</code>
