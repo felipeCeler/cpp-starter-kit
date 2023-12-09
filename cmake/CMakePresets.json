@@ -1,0 +1,174 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+      "major": 3,
+      "minor": 23,
+      "patch": 0
+    },
+    "include": 
+    [      
+    ],
+    "configurePresets": 
+    [
+      {
+        "name": "ccache-env",
+        "hidden": true,
+        "environment": {
+            "CCACHE_BASEDIR": "${sourceDir}",
+            "CCACHE_SLOPPINESS": "pch_defines,time_macros"
+        }
+      },
+      {
+        "name": "mingw_64",
+        "hidden": true,
+        "cacheVariables": {
+            "CMAKE_EXE_LINKER_FLAGS_INIT": ""
+        },
+        "environment": {
+            "CXX": "C:\\Qt\\Tools\\mingw1120_64\\bin\\g++.exe",
+            "CC": "C:\\Qt\\Tools\\mingw1120_64\\bin\\gcc.exe",
+            "RC": "C:\\Qt\\Tools\\mingw1120_64\\bin\\windres.exe"
+        }        
+      },
+      {
+        "name": "emscripten",
+        "hidden": true,
+        "cacheVariables": {
+            "CMAKE_EXE_LINKER_FLAGS_INIT": "-s WASM=1 -s USE_SDL"
+        },
+        "environment": {
+            "CXX": "/opt/emsdk/emscripten/1.38.30/em++",
+            "CC": "/opt/emsdk/emscripten/1.38.30/emcc"
+        },
+        "toolchain:": "emscripten",
+        "binaryDir": "${sourceDir}/build_wasm"
+    },
+    {
+        "name": "verbose-debug-output",
+        "hidden": true,
+        "cacheVariables": {
+            "EXTENDED_DEBUG_OUTPUT_ENABLED": "ON"
+        }
+    },
+      {
+        "name": "verbose-debug-output",
+        "hidden": true,
+        "cacheVariables": {
+            "EXTENDED_DEBUG_OUTPUT_ENABLED": "ON"
+        }
+      },
+      {
+        "name" : "qt6-desktop-mingw_64",
+        "hidden" : true,
+        "cacheVariables": {
+          "CMAKE_PREFIX_PATH": "C:\\Qt\\6.6.1\\mingw_64\\lib\\cmake"
+        }
+      },
+      {
+        "name" : "qt6-desktop-msvc2019_64",
+        "hidden" : true,
+        "cacheVariables": {
+          "CMAKE_PREFIX_PATH": "C:\\Qt\\6.6.1\\msvc2019_64\\bin"
+        }
+      },
+      {
+        "name": "ci-ninja",
+        "displayName": "Ninja",
+        "description": "build using Ninja generator",
+        "inherits": [
+            "ccache-env"
+        ],
+        "generator": "Ninja",
+        "hidden": true
+      },
+      {
+        "name": "ci-ninja-mingw_64-debug",
+        "displayName": "Ninja Mingw Debug",
+        "binaryDir": "${sourceDir}/build/mingw_64/Debug",
+        "inherits": [
+            "qt6-desktop-mingw_64",
+            "ci-ninja",
+            "mingw_64",
+            "verbose-debug-output"
+        ],
+        "cacheVariables": {
+            "CMAKE_BUILD_TYPE": "Debug"
+        }
+      },   
+      {
+        "name": "ci-ninja-mingw_64-release",
+        "displayName": "Ninja Mingw Release",
+        "binaryDir": "${sourceDir}/build/mingw_64/Release",
+        "inherits": [
+            "qt6-desktop-mingw_64",
+            "ci-ninja",
+            "mingw_64",
+            "verbose-debug-output"
+        ],
+        "cacheVariables": {
+            "CMAKE_BUILD_TYPE": "Release"
+        }
+      },     
+      {
+        "name": "ci-ninja-debug-msvc2019_64",
+        "displayName": "Ninja Debug",
+        "inherits": [
+            "qt6-desktop-msvc2019_64",
+            "ci-ninja",
+            "verbose-debug-output"
+        ],
+        "cacheVariables": {
+            "CMAKE_BUILD_TYPE": "Debug"
+        }
+      }  
+    ],
+    "buildPresets": 
+    [    
+      {
+        "name": "ci-mingw_64-debug",
+        "displayName" : "Mingw 64 Debug",
+        "configurePreset" : "ci-ninja-mingw_64-debug",
+        "configuration": "Debug",
+        "condition": {
+            "type": "equals",
+            "lhs": "${hostSystemName}",
+            "rhs": "Windows"
+        }
+      },   
+      {
+        "name": "ci-mingw_64-release",
+        "displayName" : "Mingw 64 Release",
+        "configurePreset" : "ci-ninja-mingw_64-release",
+        "configuration": "Release",
+        "condition": {
+            "type": "equals",
+            "lhs": "${hostSystemName}",
+            "rhs": "Windows"
+        }
+      },  
+      {
+        "name": "ci-msvc2019-debug",
+        "displayName" : "MSVC 2019 Debug",
+        "configurePreset" : "ci-ninja-debug-msvc2019_64",
+        "configuration": "Debug",
+        "condition": {
+            "type": "equals",
+            "lhs": "${hostSystemName}",
+            "rhs": "Windows"
+        }
+      }
+    ],
+    "testPresets": 
+    [
+    ],
+    "packagePresets": 
+    [
+    ],
+    "workflowPresets": 
+    [
+    ],
+    "vendor": 
+    {
+
+    }
+  }
