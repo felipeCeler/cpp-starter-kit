@@ -15,4 +15,4 @@ libs/**/install/*
 !libs/**/install/.gitkeep
 
 # cmake generated files
-src/**/cmake/*.cmake.in
+# src/**/cmake/*.cmake.in
