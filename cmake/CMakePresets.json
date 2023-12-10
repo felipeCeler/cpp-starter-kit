@@ -31,17 +31,16 @@
         }        
       },
       {
-        "name": "emscripten",
+        "name": "emscripten-linux",
         "hidden": true,
         "cacheVariables": {
-            "CMAKE_EXE_LINKER_FLAGS_INIT": "-s WASM=1 -s USE_SDL"
+            "CMAKE_EXE_LINKER_FLAGS_INIT": "-s WASM=1"
         },
         "environment": {
-            "CXX": "/opt/emsdk/emscripten/1.38.30/em++",
-            "CC": "/opt/emsdk/emscripten/1.38.30/emcc"
+            "CXX": "/media/frontier/sdk/emsdk/upstream/emscripten/em++",
+            "CC": "/media/frontier/sdk/emsdk/upstream/emscripten/emcc"
         },
-        "toolchain:": "emscripten",
-        "binaryDir": "${sourceDir}/build_wasm"
+        "binaryDir": "${sourceDir}/build-linux-wasm"
     },
     {
         "name": "verbose-debug-output",
@@ -55,6 +54,13 @@
         "hidden": true,
         "cacheVariables": {
             "EXTENDED_DEBUG_OUTPUT_ENABLED": "ON"
+        }
+      },
+      {
+        "name" : "qt6-desktop-linux-wasm",
+        "hidden" : true,
+        "cacheVariables": {
+          "CMAKE_PREFIX_PATH": "/home/felipe/Qt/6.6.1/wasm_singlethread/lib/cmake"
         }
       },
       {
@@ -95,6 +101,7 @@
             "CMAKE_BUILD_TYPE": "Debug"
         }
       },   
+      
       {
         "name": "ci-ninja-mingw_64-release",
         "displayName": "Ninja Mingw Release",
@@ -108,7 +115,21 @@
         "cacheVariables": {
             "CMAKE_BUILD_TYPE": "Release"
         }
-      },     
+      },   
+      {
+        "name": "ci-ninja-wasm",
+        "displayName": "Ninja wasm Debug",
+        "binaryDir": "${sourceDir}/build/wasm/Debug",
+        "inherits": [
+            "qt6-desktop-linux-wasm",
+            "ci-ninja",
+            "emscripten-linux",
+            "verbose-debug-output"
+        ],
+        "cacheVariables": {
+            "CMAKE_BUILD_TYPE": "Debug"
+        }
+      },    
       {
         "name": "ci-ninja-debug-msvc2019_64",
         "displayName": "Ninja Debug",
@@ -146,6 +167,17 @@
             "rhs": "Windows"
         }
       },  
+      {
+        "name": "ci-ninja-wasm",
+        "displayName" : "WASM Linux",
+        "configurePreset" : "ci-ninja-wasm",
+        "configuration": "Debug",
+        "condition": {
+            "type": "equals",
+            "lhs": " ${hostSystemName}",
+            "rhs": "Linux"
+        }
+      }, 
       {
         "name": "ci-msvc2019-debug",
         "displayName" : "MSVC 2019 Debug",
