@@ -60,6 +60,8 @@ set(GLAD_OPTIONS "-DGLAD_INSTALL=ON"
 
 build_external_project(${current_lib} "${THIRD_PARTY_DIR}/${current_lib}/${current_source}" ${GLAD_OPTIONS})
 
+#----------------------------------------------------------------------------------------------------
+
 # glm.
 set( current_lib "glm")
 set( current_source "glm-6ad79aae3eb5bf809c30bf1168171e9e55857e45.zip")
@@ -73,6 +75,8 @@ set(GLM_OPTIONS "-DBUILD_TESTING=OFF"
 
 build_external_project(${current_lib} "${THIRD_PARTY_DIR}/${current_lib}/${current_source}" ${GLM_OPTIONS})
 
+#----------------------------------------------------------------------------------------------------
+
 # tinyobjloader.
 set( current_lib "tinyobjloader")
 set( current_source "tinyobjloader-2.0.0rc7.zip")
@@ -85,6 +89,20 @@ set(TINYOBJLOADER_OPTIONS "-DBUILD_STATIC_LIBS=ON"
 build_external_project(${current_lib} "${THIRD_PARTY_DIR}/${current_lib}/${current_source}" ${TINYOBJLOADER_OPTIONS})
 
 #----------------------------------------------------------------------------------------------------
+
+# GLFW 3.3.9
+set( current_lib "glfw")
+set( current_source "glfw-3.3.9.zip")
+set( GLFW_OPTIONS "-DGLFW_INSTALL=ON"
+                  "-DGLFW_USE_HYBRID_HPG=ON"      
+                  "-DGLFW_BUILD_EXAMPLES=OFF"
+                  "-DBUILD_STATIC_LIBS=ON"
+                  "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
+                  "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
+                  "-DCMAKE_POSITION_INDEPENDENT_CODE=ON"
+                  "-DCMAKE_INSTALL_PREFIX=${THIRD_PARTY_INSTALL_DIR}/${current_lib}")
+
+build_external_project(${current_lib} "${THIRD_PARTY_DIR}/${current_lib}/${current_source}" ${GLFW_OPTIONS})
 
 ####################################################################################################
 # Now, you can use find_package:

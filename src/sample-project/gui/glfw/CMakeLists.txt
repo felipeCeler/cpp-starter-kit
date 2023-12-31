@@ -3,7 +3,7 @@
 # 
 
 # Target name
-set(target ${META_PROJECT_NAME})
+set(target ${META_PROJECT_NAME}-glfw)
 
 # Exit here if required dependencies are not met
 message(STATUS "Lib ${target} as ${CMAKE_BUILD_TYPE}")
@@ -14,8 +14,8 @@ if (old_cmake_files)
 endif()
 
 file(GLOB cmake_in_name RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} cmake/*config.cmake.in)
-if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${META_PROJECT_NAME}-config.cmake.in)
-        file(RENAME ${CMAKE_CURRENT_SOURCE_DIR}/${cmake_in_name} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${META_PROJECT_NAME}-config.cmake.in)
+if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${target}-config.cmake.in)
+        file(RENAME ${CMAKE_CURRENT_SOURCE_DIR}/${cmake_in_name} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${target}-config.cmake.in)
 endif()
 
 
@@ -38,18 +38,7 @@ endif()
 
 find_package(glad REQUIRED PATHS "${THIRD_PARTY_INSTALL_DIR}/glad" NO_DEFAULT_PATH)
 find_package(glm REQUIRED PATHS "${THIRD_PARTY_INSTALL_DIR}/glm" NO_DEFAULT_PATH)
-# Qt5
-find_package(Qt5 REQUIRED COMPONENTS Widgets Gui)
-
-# Enable automoc
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTORCC ON)
-set(AUTOMOC_MOC_OPTIONS PROPERTIES FOLDER CMakeAutomocTargets)
-set_property(GLOBAL PROPERTY AUTOMOC_FOLDER CMakeAutomocTargets)
-
-# ENABLE CMP0020: Automatically link Qt executables to qtmain target on Windows.
-cmake_policy(SET CMP0020 NEW)
+find_package(glfw3 REQUIRED PATHS "${THIRD_PARTY_INSTALL_DIR}/glfw" NO_DEFAULT_PATH)
 
 # 
 # Create library
@@ -68,9 +57,6 @@ cmake_policy(SET CMP0020 NEW)
 # Build library
 add_executable(${target})
 
-# Depend on other external projects (target-level).
-#add_dependencies(${target} glm::glm glad::glad)
-
 # Create namespaced alias
 add_executable(${META_PROJECT_NAME}::${target} ALIAS ${target})
 
@@ -82,14 +68,6 @@ add_executable(${META_PROJECT_NAME}::${target} ALIAS ${target})
 #    @see https://cmake.org/pipermail/cmake/2016-July/063907.html
 target_sources( ${target}      
     PRIVATE
-      gui/qt5/about_widget/about_widget.hpp
-      gui/qt5/about_widget/about_widget.cpp
-      gui/qt5/about_widget/about_widget_form.ui
-      gui/qt5/opengl_canvas_widget/opengl_canvas_widget.hpp
-      gui/qt5/opengl_canvas_widget/opengl_canvas_widget.cpp
-      gui/qt5/main_window/main_window.hpp
-      gui/qt5/main_window/main_window.cpp
-      gui/qt5/main_window/main_window_form.ui
       main.cpp
 )
 
@@ -108,15 +86,12 @@ set_target_properties(${target}
       # Example: extension .exe
       OUTPUT_NAME ${target} 
       SUFFIX ".exe"
-      PREFIX "qt5-"
+      PREFIX "glfw3-"
       CXX_STANDARD 17
         
       ARCHIVE_OUTPUT_DIRECTORY "${OUTPUT}/data"
       LIBRARY_OUTPUT_DIRECTORY "${OUTPUT}/lib"
-      RUNTIME_OUTPUT_DIRECTORY "${OUTPUT}/bin"
-
-      # Qt5 Properties
-      WIN32_EXECUTABLE TRUE
+      RUNTIME_OUTPUT_DIRECTORY "${OUTPUT}/bin"      
 )
 
 
@@ -143,9 +118,8 @@ target_link_libraries(${target}
         # Modern OpenGL Extension Loader    
         glad::glad
         glm::glm
+        glfw
         # On Linux we need libdl.so
-        Qt5::Gui
-        Qt5::Widgets  
         $<$<BOOL:${UNIX}>:dl>
     INTERFACE
 )
@@ -177,9 +151,7 @@ target_compile_features(${target}
 
 target_compile_options(${target}
     PRIVATE
-        # possible ID for Compiler @see https://cmake.org/cmake/help/latest/variable/CMAKE_LANG_COMPILER_ID.html
-        $<$<COMPILE_LANG_AND_ID:CXX,Clang>:-Wall># $< $<COMPILER_LANG_AND_ID:CXX,Clang>: -Wall>        
-        #$<$<COMPILE_LANG_AND_ID:CXX,Clang>:-Wall> /W3;/MP; $<$<CONFIG:RELEASE>:/O2> >
+        # possible ID for Compiler @see https://cmake.org/cmake/help/latest/variable/CMAKE_LANG_COMPILER_ID.html        
     PUBLIC
 
     INTERFACE
@@ -219,21 +191,6 @@ install(TARGETS ${target}
         DESTINATION ${CMAKE_INSTALL_BINDIR}
         COMPONENT Runtime
 )
-
-# Using this solution - @see https://blog.nathanosman.com/2017/11/24/using-windeployqt-with-cpack.html
-# Similar solution - @see https://stackoverflow.com/questions/41193584/deploy-all-qt-dependencies-when-building
-if(WIN32)
-    include(WinQt5Deploy)
-    windeployqt(${target} ${CMAKE_INSTALL_BINDIR})
-elseif(LINUX)
-    message("Download and compiler it. You are smart =) ..")
-elseif(APPLE)
-    message("Really ..")
-else()
-    message("Where you are ? ..")
-endif()
-
-
 
 include(CMakePackageConfigHelpers)
 

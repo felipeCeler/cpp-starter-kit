@@ -1,5 +1,6 @@
 {
-  "version": 6,
+  "version": 8,
+  "$schema": "https://cmake.org/cmake/help/latest/_downloads/3e2d73bff478d88a7de0de736ba5e361/schema.json",
   "cmakeMinimumRequired": {
     "major": 3,
     "minor": 23,
@@ -7,6 +8,31 @@
   },
   "include": [],
   "configurePresets": [
+    {
+      "name": "windows",
+      "hidden": true,
+      "cacheVariables": {
+        "VCPKG_TARGET_TRIPLET": "x64-windows",
+        "CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM": "10.0.22621.0",
+        "CMAKE_SYSTEM_VERSION": "10.0.19041.0"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "linux",
+      "hidden": true,
+      "cacheVariables": {
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
     {
       "name": "ccache-env",
       "hidden": true,
@@ -16,29 +42,6 @@
       }
     },
     {
-      "name": "mingw_64",
-      "hidden": true,
-      "cacheVariables": {
-        "CMAKE_EXE_LINKER_FLAGS_INIT": ""
-      },
-      "environment": {
-        "CXX": "C:\\Qt\\Tools\\mingw1120_64\\bin\\g++.exe",
-        "CC": "C:\\Qt\\Tools\\mingw1120_64\\bin\\gcc.exe",
-        "RC": "C:\\Qt\\Tools\\mingw1120_64\\bin\\windres.exe"
-      }      
-    },
-    {
-      "name": "emscripten-linux",
-      "hidden": true,
-      "cacheVariables": {
-        "CMAKE_EXE_LINKER_FLAGS_INIT": "-s WASM=1"
-      },
-      "environment": {
-        "CXX": "/media/frontier/sdk/emsdk/upstream/emscripten/em++",
-        "CC": "/media/frontier/sdk/emsdk/upstream/emscripten/emcc"
-      }      
-    },
-    {
       "name": "verbose-debug-output",
       "hidden": true,
       "cacheVariables": {
@@ -46,26 +49,47 @@
       }
     },
     {
-      "name": "qt6-desktop-linux-wasm",
+      "name": "ninja-generator",
       "hidden": true,
+      "displayName": "Default Ninja Config",
+      "description": "Default build using Ninja generator",
+      "generator": "Ninja",      
       "cacheVariables": {
-        "CMAKE_PREFIX_PATH": "/home/felipe/Qt/6.6.1/wasm_singlethread/lib/cmake"
+      },
+      "vendor": {
       }
     },
     {
-      "name": "windows",
+      "name": "ninja-multi-config",
       "hidden": true,
+      "displayName": "Ninja Multi Config",
+      "description": "Build using Ninja Multi Config generator",
+      "generator": "Ninja Multi-Config",
       "cacheVariables": {
-        "CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM": "10.0.22621.0",
-        "CMAKE_SYSTEM_VERSION": "10.0.19041.0"
+      },
+      "vendor": {
       }
     },
     {
-      "name": "windows-msvc-2019",
-      "inherits": "windows",
+      "name": "mingw_64",
       "hidden": true,
-      "displayName": "Windows-only configuration",
-      "description": "This build is only available on Windows",
+      "cacheVariables": {
+        "CMAKE_EXE_LINKER_FLAGS_INIT": ""
+      },
+      "environment": {
+        "CXX":"g++.exe",
+        "CC": "gcc.exe",
+        "RC": "windres.exe"
+      },
+      "inherits": [
+        "windows"       
+      ]
+    },
+    {
+      "name": "msvc-2019",
+      "hidden": true,
+      "displayName": "msvc 2019",
+      "description": "Building using msvc 2019 tools",
       "generator": "Ninja Multi-Config",
       "cacheVariables": {
         "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/Windows.MSVC.toolchain.cmake",
@@ -81,30 +105,60 @@
       "architecture": {
         "value": "x64",
         "strategy": "external"
-      }      
+      },
+      "inherits": [
+        "windows"       
+      ]    
+    },
+    {
+      "name": "emscripten-linux",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_EXE_LINKER_FLAGS_INIT": "-s WASM=1"
+      },
+      "environment": {
+        "CXX": "/media/frontier/sdk/emsdk/upstream/emscripten/em++",
+        "CC": "/media/frontier/sdk/emsdk/upstream/emscripten/emcc"
+      },
+      "inherits": [
+        "linux"       
+      ]      
+    },
+    {
+      "name": "qt6-desktop-linux-wasm",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_PREFIX_PATH": "/home/felipe/Qt/6.6.1/wasm_singlethread/lib/cmake"
+      }
     },
     {
       "name": "qt6-desktop-mingw_64",
       "hidden": true,
       "cacheVariables": {
         "CMAKE_PREFIX_PATH": "C:\\Qt\\6.6.1\\mingw_64\\lib\\cmake"
-      }
+      },
+      "inherits": [
+        "windows"       
+      ]
     },
     {
       "name": "qt6-desktop-msvc2019_64",
       "hidden": true,
       "cacheVariables": {
         "CMAKE_PREFIX_PATH": "C:\\Qt\\6.6.1\\msvc2019_64\\lib\\cmake"
-      }
+      },
+      "inherits": [
+        "windows"       
+      ]
     },
     {
       "name": "ci-ninja",
       "displayName": "Ninja",
       "description": "build using Ninja generator",
       "inherits": [
+        "ninja-generator",
         "ccache-env"
       ],
-      "generator": "Ninja",
       "hidden": true
     },
     {
@@ -152,12 +206,12 @@
     {
       "name": "ci-ninja-msvc2019_64-debug",
       "displayName": "Ninja MSVC 2019 x64 Debug",
-      "binaryDir": "${sourceDir}/build/msvc2016_X64/Debug",
+      "binaryDir": "${sourceDir}/build/msvc2019_X64/Debug",
       "inherits": [
         "qt6-desktop-msvc2019_64",
         "ci-ninja",
         "verbose-debug-output",
-        "windows-msvc-2019"        
+        "msvc-2019"        
       ],
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
@@ -169,45 +223,25 @@
       "name": "ci-mingw_64-debug",
       "displayName": "Mingw x64 Debug",
       "configurePreset": "ci-ninja-mingw_64-debug",
-      "configuration": "Debug",
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Windows"
-      }
+      "configuration": "Debug"
     },
     {
       "name": "ci-mingw_64-release",
       "displayName": "Mingw x64 Release",
       "configurePreset": "ci-ninja-mingw_64-release",
-      "configuration": "Release",
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Windows"
-      }
+      "configuration": "Release"
     },
     {
       "name": "ci-ninja-wasm",
       "displayName": "WASM Linux",
       "configurePreset": "ci-ninja-wasm",
-      "configuration": "Debug",
-      "condition": {
-        "type": "equals",
-        "lhs": " ${hostSystemName}",
-        "rhs": "Linux"
-      }
+      "configuration": "Debug"
     },
     {
       "name": "ci-msvc2019-debug",
       "displayName": "MSVC 2019 Debug",
       "configurePreset": "ci-ninja-msvc2019_64-debug",
-      "configuration": "Debug",
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Windows"
-      }
+      "configuration": "Debug"
     }
   ],
   "testPresets": [],

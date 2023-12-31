@@ -54,7 +54,7 @@ option(BUILD_SHARED_LIBS        "Build shared instead of static libraries."     
 option(OPTION_BUILD_DOCS        "Build documentation."                                   OFF)
 option(OPTION_BUILD_EXAMPLES    "Build examples."                                        ON)
 
-option(OPTION_BUILD_GLFW        "Build GLFW."                                       OFF)
+option(OPTION_BUILD_GLFW        "Build GLFW."                                       ON)
 option(OPTION_BUILD_Qt5         "Build Qt5."                                        OFF)
 option(OPTION_BUILD_Qt6         "Build QT6."                                        ON)
 

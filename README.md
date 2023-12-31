@@ -32,6 +32,8 @@ cmake -B build/Debug -GNinja -DCMAKE_BUILD_TYPE=Debug && cmake --build .\build\D
 
 # Build with preset
 
+
+# Starting a new project  
 You can use:
 <code>git archive --format zip --output /full/path/to/zipfile.zip master</code>
 to create a zip file of the project.
@@ -40,3 +42,4 @@ to create a zip file of the project.
 - Tree code -  https://tree.nathanfriend.io/ and Markdown bash code - https://newbedev.com/is-there-a-way-to-represent-a-directory-tree-in-a-github-readme-md
 - cmake-init - https://github.com/cginternals/cmake-init
 - Find WindowsToolchain - https://github.com/MarkSchofield/WindowsToolchain
+- WinQtDeploy Script - https://github.com/nitroshare/nitroshare-desktop 
