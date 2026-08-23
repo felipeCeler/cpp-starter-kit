@@ -1,7 +1,7 @@
 ﻿cpp-starter-kit
 ==================
 
-This repository is a skeleton for cpp project using Qt5 and OpenGL.
+This repository is a skeleton for cpp project using Qt and glfw and OpenGL.
 
 The name of the project* is defined by the variable META_PROJECT_NAME on the root CMakeLists.txt file. When modified, the "_sample-project_" name and  "_sample-project.config.cmake.in_" will be update accordingly.
 
