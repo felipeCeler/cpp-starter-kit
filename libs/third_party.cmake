@@ -56,7 +56,8 @@ set(GLAD_OPTIONS "-DGLAD_INSTALL=ON"
                  "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
                  "-DCMAKE_POSITION_INDEPENDENT_CODE=ON"
                  "-DBUILD_SHARED_LIBS=OFF"
-                 "-DCMAKE_INSTALL_PREFIX=${THIRD_PARTY_INSTALL_DIR}/${current_lib}")
+                 "-DCMAKE_INSTALL_PREFIX=${THIRD_PARTY_INSTALL_DIR}/${current_lib}"
+                 "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
 
 build_external_project(${current_lib} "${THIRD_PARTY_DIR}/${current_lib}/${current_source}" ${GLAD_OPTIONS})
 
@@ -71,7 +72,8 @@ set(GLM_OPTIONS "-DBUILD_TESTING=OFF"
                 "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
                 "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
                 "-DCMAKE_POSITION_INDEPENDENT_CODE=ON"
-                "-DCMAKE_INSTALL_PREFIX=${THIRD_PARTY_INSTALL_DIR}/${current_lib}")
+                "-DCMAKE_INSTALL_PREFIX=${THIRD_PARTY_INSTALL_DIR}/${current_lib}"
+                "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
 
 build_external_project(${current_lib} "${THIRD_PARTY_DIR}/${current_lib}/${current_source}" ${GLM_OPTIONS})
 
@@ -84,25 +86,32 @@ set(TINYOBJLOADER_OPTIONS "-DBUILD_STATIC_LIBS=ON"
                           "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
                           "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
                           "-DCMAKE_POSITION_INDEPENDENT_CODE=ON"
-                          "-DCMAKE_INSTALL_PREFIX=${THIRD_PARTY_INSTALL_DIR}/${current_lib}")
+                          "-DCMAKE_INSTALL_PREFIX=${THIRD_PARTY_INSTALL_DIR}/${current_lib}"
+                          "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
 
 build_external_project(${current_lib} "${THIRD_PARTY_DIR}/${current_lib}/${current_source}" ${TINYOBJLOADER_OPTIONS})
 
 #----------------------------------------------------------------------------------------------------
 
-# GLFW 3.3.9
-set( current_lib "glfw")
-set( current_source "glfw-3.3.9.zip")
-set( GLFW_OPTIONS "-DGLFW_INSTALL=ON"
-                  "-DGLFW_USE_HYBRID_HPG=ON"      
-                  "-DGLFW_BUILD_EXAMPLES=OFF"
-                  "-DBUILD_STATIC_LIBS=ON"
-                  "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
-                  "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
-                  "-DCMAKE_POSITION_INDEPENDENT_CODE=ON"
-                  "-DCMAKE_INSTALL_PREFIX=${THIRD_PARTY_INSTALL_DIR}/${current_lib}")
 
-build_external_project(${current_lib} "${THIRD_PARTY_DIR}/${current_lib}/${current_source}" ${GLFW_OPTIONS})
+if(OPTION_BUILD_GLFW)
+    # GLFW 3.3.9
+    set( current_lib "glfw")
+    set( current_source "glfw-3.3.9.zip")
+    set( GLFW_OPTIONS "-DGLFW_INSTALL=ON"
+                    "-DGLFW_USE_HYBRID_HPG=ON"      
+                    "-DGLFW_BUILD_EXAMPLES=OFF"
+                    "-DBUILD_STATIC_LIBS=ON"
+                    "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
+                    "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
+                    "-DCMAKE_POSITION_INDEPENDENT_CODE=ON"
+                    "-DCMAKE_INSTALL_PREFIX=${THIRD_PARTY_INSTALL_DIR}/${current_lib}"
+                    "-DCMAKE_POLICY_VERSION_MINIMUM=3.5")
+
+    build_external_project(${current_lib} "${THIRD_PARTY_DIR}/${current_lib}/${current_source}" ${GLFW_OPTIONS})        
+endif()
+
+
 
 ####################################################################################################
 # Now, you can use find_package:
