@@ -1,0 +1,38 @@
+{
+  "version": 8,
+  "configurePresets": [
+    {
+      "name": "abstract-msvc2022-x64",
+      "description": "Initializes MSVC 2022 (v143) x64 compiler, standard library, and Windows SDK",
+      "hidden": true,
+      "condition": { 
+        "type": "equals", 
+        "lhs": "${hostSystemName}", 
+        "rhs": "Windows" 
+      },
+      "architecture": { 
+        "value": "x64"        
+      },
+      "toolset": { 
+        "value": "v143"        
+      }
+    },
+    {
+      "name": "abstract-msvc2026-x64",
+      "description": "Initializes MSVC 2026 (v144) x64 compiler, standard library, and Windows SDK",
+      "hidden": true,
+      "condition": { 
+        "type": "equals", 
+        "lhs": "${hostSystemName}", 
+        "rhs": "Windows" 
+      },
+      "architecture": { 
+        "value": "x64"
+      
+      },
+      "toolset": { 
+        "value": "v144"        
+      }
+    }
+  ]
+}

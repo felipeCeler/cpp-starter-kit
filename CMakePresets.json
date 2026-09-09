@@ -1,0 +1,92 @@
+{
+    "version": 8,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 30,
+        "patch": 0
+    },
+    "include": [
+        "cmake/presets/gcc-environment.json",
+        "cmake/presets/msvc-environment.json",
+        "cmake/presets/generators.json"
+    ],
+    "configurePresets": [
+        {
+            "name": "debug-ninja-msvc2022-x64-generator",
+            "displayName": "Debug Build Ninja Generator Preset with MSVC 2022",
+            "description": "Local debug configuration with tracking variables",
+            "hidden": true,
+            "inherits": [
+                "abstract-msvc2022-x64",
+                "abstract-ninja-generator"
+            ],
+            "architecture": {
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "release-ninja-msvc2022-x64-generator",
+            "displayName": "Release Build Ninja Generator Preset with MSVC 2022",
+            "description": "Local release configuration with optimizations",
+            "hidden": true,
+            "inherits": [
+                "abstract-msvc2022-x64",
+                "abstract-ninja-generator"
+            ],
+            "architecture": {
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "debug-ninja-msvc2026-x64-generator",
+            "displayName": "Debug Build Ninja Generator Preset with MSVC 2026",
+            "description": "Local debug configuration with tracking variables",
+            "hidden": true,
+            "inherits": [
+                "abstract-msvc2026-x64",
+                "abstract-ninja-generator"
+            ],
+            "architecture": {
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "release-ninja-msvc2026-x64-generator",
+            "displayName": "Release Build Ninja Generator Preset with MSVC 2026",
+            "description": "Local release configuration with optimizations",
+            "hidden": true,
+            "inherits": [
+                "abstract-msvc2026-x64",
+                "abstract-ninja-generator"
+            ],
+            "architecture": {
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "debug-ninja-gcc-x64-generator",
+            "displayName": "Debug Build Ninja Generator Preset with GCC",
+            "description": "Local debug configuration with tracking variables",
+            "hidden": true,
+            "inherits": [
+                "abstract-gcc-x64",
+                "abstract-ninja-generator"
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        }
+    ]
+}

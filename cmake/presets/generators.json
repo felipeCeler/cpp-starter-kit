@@ -1,0 +1,12 @@
+{
+  "version": 8,
+  "configurePresets": [
+    {
+      "name": "abstract-ninja-generator",
+      "description": "Abstract base preset utilizing Ninja generator",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}"
+    }
+  ]
+}
