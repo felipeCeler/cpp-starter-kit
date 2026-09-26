@@ -110,14 +110,14 @@ set_target_properties(${target}
       # Example: extension .exe
       OUTPUT_NAME ${target} 
       SUFFIX ".exe"
-      PREFIX "qt5-"
+      PREFIX "qt6-"
       CXX_STANDARD 17
         
       ARCHIVE_OUTPUT_DIRECTORY "${OUTPUT}/data"
       LIBRARY_OUTPUT_DIRECTORY "${OUTPUT}/lib"
       RUNTIME_OUTPUT_DIRECTORY "${OUTPUT}/bin"
 
-      # Qt5 Properties
+      # Qt6 Properties
       WIN32_EXECUTABLE TRUE
 )
 
@@ -228,12 +228,8 @@ install(TARGETS ${target}
 if(WIN32)
     include(WinQt6Deploy)
     windeployqt(${target} ${CMAKE_INSTALL_BINDIR})
-elseif(LINUX)
-    message("Download and compiler it. You are smart =) ..")
-elseif(APPLE)
-    message("Really ..")
-else()
-    message("Where you are ? ..")
+elseif(LINUX OR APPLE)
+    message("Not supported yet")
 endif()
 
 

@@ -1,9 +1,8 @@
-﻿cpp-starter-kit
-==================
+﻿# cpp-starter-kit
 
 This repository is a skeleton for cpp project using Qt, glfw and OpenGL.
 
-The name of the project* is defined by the variable META_PROJECT_NAME on the root CMakeLists.txt file. When modified, the "_sample-project_" name and  "_sample-project.config.cmake.in_" will be update accordingly.
+The name of the project\* is defined by the variable META*PROJECT_NAME on the root CMakeLists.txt file. When modified, the "\_sample-project*" name and "_sample-project.config.cmake.in_" will be update accordingly.
 
 ```bash
 .
@@ -26,20 +25,24 @@ The name of the project* is defined by the variable META_PROJECT_NAME on the roo
 └── README.md
 ```
 
-# Build without preset
-Debug or Release
-cmake -B build/Debug -GNinja -DCMAKE_BUILD_TYPE=Debug && cmake --build .\build\Debug
-
 # Build with preset
 
+See [CMakeUserPresets.json.example.md](CMakeUserPresets.json.example.md) to configure your local user preset before building.
+List available presets:
 
-# Starting a new project  
+```bash
+cmake --list-presets
+```
+
+# Starting a new project
+
 You can use:
 <code>git archive --format zip --output /full/path/to/zipfile.zip master</code>
 to create a zip file of the project.
 
 ### Reference
-- Tree code -  https://tree.nathanfriend.io/ and Markdown bash code - https://newbedev.com/is-there-a-way-to-represent-a-directory-tree-in-a-github-readme-md
+
+- Tree code - https://tree.nathanfriend.io/ and Markdown bash code - https://newbedev.com/is-there-a-way-to-represent-a-directory-tree-in-a-github-readme-md
 - cmake-init - https://github.com/cginternals/cmake-init
 - Find WindowsToolchain - https://github.com/MarkSchofield/WindowsToolchain
-- WinQtDeploy Script - https://github.com/nitroshare/nitroshare-desktop 
+- WinQtDeploy Script - https://github.com/nitroshare/nitroshare-desktop

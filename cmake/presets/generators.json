@@ -7,6 +7,26 @@
       "hidden": true,
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/${presetName}"
-    }
+    },
+    {    
+      "name": "abstract-msvc-ninja-generator",
+      "description": "Abstract base preset utilizing MSVC Ninja generator",
+      "hidden": true,
+      "generator": "Ninja",
+      "condition": { 
+        "type": "equals", 
+        "lhs": "${hostSystemName}", 
+        "rhs": "Windows" 
+      },
+      "architecture": { 
+        "strategy": "external"
+      
+      },
+      "toolset": { 
+        "strategy": "external"       
+      },
+      "binaryDir": "${sourceDir}/build/${presetName}"
+     }
   ]
 }
+

@@ -19,9 +19,14 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 #
 
 # Meta information about the project
+# Change the src/sample-project to the name of your project, and the META_PROJECT_NAME to the same name as well.
 set(META_PROJECT_NAME "sample-project")
 
-# set(META_API_NAME            "SAMPLE-PROJECT_API_EXPORT")
+string(TOUPPER "${META_PROJECT_NAME}" META_PROJECT_NAME_UPPER)
+# 2. Concatenate the uppercase name with the "_API_EXPORT" suffix
+string(CONCAT EXPORT_MACRO_NAME "${META_PROJECT_NAME_UPPER}" "_API_EXPORT")
+
+set(META_API_NAME            ${EXPORT_MACRO_NAME})
 set(META_PROJECT_DESCRIPTION "Sample Project Start Kit")
 set(META_AUTHOR_ORGANIZATION "Hops System")
 set(META_AUTHOR_DOMAIN "https://www.myself.me")
@@ -55,10 +60,9 @@ option(OPTION_BUILD_DOCS "Build documentation."                      OFF)
 option(OPTION_BUILD_EXAMPLES "Build examples."                       ON)
 
 option(OPTION_BUILD_GLFW "Build GLFW."                               OFF)
-option(OPTION_BUILD_Qt6 "Build QT6."                                  ON)
+option(OPTION_BUILD_Qt6  "Build  QT6."                                ON)
 
 # Build third party libraries
 include(libs/third_party.cmake)
 
-# # - Examples using and Qt5
 add_subdirectory(src/${META_PROJECT_NAME})
