@@ -211,18 +211,82 @@ Build presets automate invoking the build tool (`Ninja`) with predefined options
 
 ---
 
-## 3. Quick CLI Reference
+## 4. Minimal Example: Quick-Start (MSVC & Linux GCC)
+
+If you only want a minimal `CMakeUserPresets.json` with just the essential Debug presets for Windows (MSVC) and Linux (GCC):
+
+```json
+{
+  "version": 8,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 30,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "local-debug-msvc2026-x64-ninja-generator",
+      "displayName": "Local Debug (MSVC 2026 x64 Ninja)",
+      "inherits": "debug-msvc2026-x64-ninja-generator",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      },
+      "cacheVariables": {
+        "CMAKE_PREFIX_PATH": "$env{Qt6_DIR}",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/${presetName}/install"
+      }
+    },
+    {
+      "name": "local-debug-gcc-x64-ninja-generator",
+      "displayName": "Local Debug (GCC x64 Ninja)",
+      "inherits": "debug-gcc-x64-ninja-generator",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "cacheVariables": {
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/${presetName}/install"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "local-build-debug-msvc2026-x64-ninja-generator",
+      "displayName": "Build Local Debug (MSVC 2026 x64 Ninja)",
+      "configurePreset": "local-debug-msvc2026-x64-ninja-generator",
+      "jobs": 20
+    },
+    {
+      "name": "local-build-debug-gcc-x64-ninja-generator",
+      "displayName": "Build Local Debug (GCC x64 Ninja)",
+      "configurePreset": "local-debug-gcc-x64-ninja-generator",
+      "jobs": 20
+    }
+  ]
+}
+```
+
+### CLI commands for the minimal setup:
+
+**Windows (MSVC):**
 
 ```bash
-# 1. View all configured presets
-cmake --list-presets
-
-# 2. Configure the project using a user preset
+# Configure
 cmake --preset local-debug-msvc2026-x64-ninja-generator
 
-# 3. Build the sample/demo project
+# Build
 cmake --build --preset local-build-debug-msvc2026-x64-ninja-generator
+```
 
-# 4. Install the sample/demo project
-cmake --build --preset local-install-debug-msvc2026-x64-ninja-generator
+**Linux (GCC):**
+
+```bash
+# Configure
+cmake --preset local-debug-gcc-x64-ninja-generator
+
+# Build
+cmake --build --preset local-build-debug-gcc-x64-ninja-generator
 ```
