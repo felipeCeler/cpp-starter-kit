@@ -1,32 +1,19 @@
 {
-  "version": 8,
+  "version": 10,
   "configurePresets": [
     {
       "name": "abstract-ninja-generator",
-      "description": "Abstract base preset utilizing Ninja generator",
+      "description": "Abstract base preset utilizing Ninja generator with external architecture/toolset strategy",
       "hidden": true,
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/${presetName}"
-    },
-    {    
-      "name": "abstract-msvc-ninja-generator",
-      "description": "Abstract base preset utilizing MSVC Ninja generator",
-      "hidden": true,
-      "generator": "Ninja",
-      "condition": { 
-        "type": "equals", 
-        "lhs": "${hostSystemName}", 
-        "rhs": "Windows" 
-      },
-      "architecture": { 
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "installDir": "${sourceDir}/build/${presetName}/install",
+      "architecture": {
         "strategy": "external"
-      
       },
-      "toolset": { 
-        "strategy": "external"       
-      },
-      "binaryDir": "${sourceDir}/build/${presetName}"
-     }
+      "toolset": {
+        "strategy": "external"
+      }
+    }
   ]
 }
-

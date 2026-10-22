@@ -1,6 +1,6 @@
 # CMake version
 # Template based on cmake-init project @see https://github.com/cginternals/cmake-init
-cmake_minimum_required(VERSION 4.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 4.0.0 FATAL_ERROR)
 
 # Maybe stop from "CMaKeing" in the wrong place
 if(CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)

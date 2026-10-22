@@ -1,0 +1,48 @@
+{
+  "version": 10,
+  "configurePresets": [
+    {
+      "name": "abstract-msvc-base",
+      "description": "Common Windows/MSVC base settings (cl compiler and host condition)",
+      "hidden": true,
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      },
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "cl",
+        "CMAKE_CXX_COMPILER": "cl"
+      }
+    },
+    {
+      "name": "abstract-msvc2022-x64",
+      "description": "Initializes MSVC 2022 (v143) x64 compiler, standard library, and Windows SDK",
+      "hidden": true,
+      "inherits": [
+        "abstract-msvc-base"
+      ],
+      "architecture": {
+        "value": "x64"
+      },
+      "toolset": {
+        "value": "v143,host=x64"
+      }
+    },
+    {
+      "name": "abstract-msvc2026-x64",
+      "description": "Initializes MSVC 2026 (v145) x64 compiler, standard library, and Windows SDK",
+      "hidden": true,
+      "inherits": [
+        "abstract-msvc-base"
+      ],
+      "architecture": {
+        "value": "x64"
+      },
+      "toolset": {
+        "value": "v145,host=x64"
+      }
+    }
+  ]
+}
+

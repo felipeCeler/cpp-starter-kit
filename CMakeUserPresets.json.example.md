@@ -8,61 +8,64 @@
 
 ```json
 {
-  "version": 8,
+  "version": 10,
   "cmakeMinimumRequired": {
-    "major": 3,
-    "minor": 30,
+    "major": 4,
+    "minor": 0,
     "patch": 0
   },
   "configurePresets": [
     {
-      "name": "common-cache-qt6-install-path",
+      "name": "common-qt6-path",
       "hidden": true,
       "cacheVariables": {
-        "CMAKE_PREFIX_PATH": "$env{Qt6_DIR}",
-        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/${presetName}/install"
-      }
-    },
-    {
-      "name": "common-cache-qt6-install-path-linux",
-      "hidden": true,
-      "cacheVariables": {
-        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/${presetName}/install"
+        "CMAKE_PREFIX_PATH": "$env{Qt6_DIR}"
       }
     },
     {
       "name": "local-debug-msvc2022-x64-ninja-generator",
+      "displayName": "Local Debug (MSVC 2022 x64 Ninja)",
       "inherits": [
         "debug-msvc2022-x64-ninja-generator",
-        "common-cache-qt6-install-path"
+        "common-qt6-path"
       ]
     },
     {
       "name": "local-release-msvc2022-x64-ninja-generator",
+      "displayName": "Local Release (MSVC 2022 x64 Ninja)",
       "inherits": [
         "release-msvc2022-x64-ninja-generator",
-        "common-cache-qt6-install-path"
+        "common-qt6-path"
       ]
     },
     {
       "name": "local-debug-msvc2026-x64-ninja-generator",
+      "displayName": "Local Debug (MSVC 2026 x64 Ninja)",
       "inherits": [
         "debug-msvc2026-x64-ninja-generator",
-        "common-cache-qt6-install-path"
+        "common-qt6-path"
       ]
     },
     {
       "name": "local-release-msvc2026-x64-ninja-generator",
+      "displayName": "Local Release (MSVC 2026 x64 Ninja)",
       "inherits": [
         "release-msvc2026-x64-ninja-generator",
-        "common-cache-qt6-install-path"
+        "common-qt6-path"
       ]
     },
     {
       "name": "local-debug-gcc-x64-ninja-generator",
+      "displayName": "Local Debug (GCC x64 Ninja)",
       "inherits": [
-        "debug-gcc-x64-ninja-generator",
-        "common-cache-qt6-install-path-linux"
+        "debug-gcc-x64-ninja-generator"
+      ]
+    },
+    {
+      "name": "local-release-gcc-x64-ninja-generator",
+      "displayName": "Local Release (GCC x64 Ninja)",
+      "inherits": [
+        "release-gcc-x64-ninja-generator"
       ]
     }
   ],
@@ -80,13 +83,13 @@
       "targets": ["install"]
     },
     {
-      "name": "local-build-release-msvc2026",
+      "name": "local-build-release-msvc2026-x64-ninja-generator",
       "displayName": "Local Build Release (MSVC 2026)",
       "configurePreset": "local-release-msvc2026-x64-ninja-generator",
       "jobs": 20
     },
     {
-      "name": "local-install-release-msvc2026",
+      "name": "local-install-release-msvc2026-x64-ninja-generator",
       "displayName": "Local Install Release (MSVC 2026)",
       "configurePreset": "local-release-msvc2026-x64-ninja-generator",
       "targets": ["install"]
@@ -96,6 +99,24 @@
       "displayName": "Local Build Debug (GCC)",
       "configurePreset": "local-debug-gcc-x64-ninja-generator",
       "jobs": 20
+    },
+    {
+      "name": "local-install-debug-gcc-x64-ninja-generator",
+      "displayName": "Local Install Debug (GCC)",
+      "configurePreset": "local-debug-gcc-x64-ninja-generator",
+      "targets": ["install"]
+    },
+    {
+      "name": "local-build-release-gcc-x64-ninja-generator",
+      "displayName": "Local Build Release (GCC)",
+      "configurePreset": "local-release-gcc-x64-ninja-generator",
+      "jobs": 20
+    },
+    {
+      "name": "local-install-release-gcc-x64-ninja-generator",
+      "displayName": "Local Install Release (GCC)",
+      "configurePreset": "local-release-gcc-x64-ninja-generator",
+      "targets": ["install"]
     }
   ]
 }
@@ -108,53 +129,35 @@
 ### A. Schema & Minimum Required Version
 
 ```json
-"version": 8,
+"version": 10,
 "cmakeMinimumRequired": {
-    "major": 3,
-    "minor": 30,
+    "major": 4,
+    "minor": 0,
     "patch": 0
 }
 ```
 
-- **`version: 8`**: Specifies the CMake presets format version (introduced with CMake 3.30).
-- **`cmakeMinimumRequired`**: Ensures CMake versions older than 3.30 reject the file upfront rather than failing with cryptic parsing errors.
+- **`version: 10`**: Specifies the CMake presets format version (supported in CMake 4.0+, adding `$comment` and `graphviz` fields).
+- **`cmakeMinimumRequired`**: Ensures CMake versions older than 4.0.0 reject the file upfront rather than failing with cryptic parsing errors.
 
 ---
 
-### B. Common Reusable Fragments (`hidden: true`)
+### B. Common Reusable Fragment (`hidden: true`)
 
-These presets are base fragments (mixins) used to share common cache variables among multiple presets. Because `"hidden": true` is set, they do not appear in the IDE or command-line preset list.
-
-#### 1. Qt6 Search Path + Demo Install Destination
+This preset is a base fragment (mixin) used to share the local Qt6 search path among multiple presets. Because `"hidden": true` is set, it does not appear in the IDE or command-line preset list.
 
 ```json
 {
-  "name": "common-cache-qt6-install-path",
+  "name": "common-qt6-path",
   "hidden": true,
   "cacheVariables": {
-    "CMAKE_PREFIX_PATH": "$env{Qt6_DIR}",
-    "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/${presetName}/install"
+    "CMAKE_PREFIX_PATH": "$env{Qt6_DIR}"
   }
 }
 ```
 
 - **`CMAKE_PREFIX_PATH: "$env{Qt6_DIR}"`**: Reads the local environment variable `Qt6_DIR` (e.g. `C:\Qt\6.8.0\msvc2022_64`) so `find_package(Qt6)` locates the Qt installation on the developer machine.
-- **`CMAKE_INSTALL_PREFIX`**: Designates where the compiled sample/demo binaries, dependencies, and assets are installed when running the `install` target. By using `${sourceDir}/build/${presetName}/install`, each preset installs neatly inside its own build tree.
-
-#### 2. Demo Install Destination Only
-
-```json
-{
-  "name": "common-cache-qt6-install-path-linux",
-  "hidden": true,
-  "cacheVariables": {
-    "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/${presetName}/install"
-  }
-}
-```
-
-- Defines **only** `CMAKE_INSTALL_PREFIX` without overriding `CMAKE_PREFIX_PATH`.
-- Used when Qt is already in system PATH / standard library locations (such as system package manager installs), or for builds where manual Qt paths are not required.
+- *(Note: The install destination `"installDir": "${sourceDir}/build/${presetName}/install"` is already defined project-wide in `cmake/presets/generators.json`).*
 
 ---
 
@@ -165,16 +168,17 @@ These are the runnable presets that appear in your IDE (VS Code / Visual Studio)
 ```json
 {
   "name": "local-debug-msvc2026-x64-ninja-generator",
+  "displayName": "Local Debug (MSVC 2026 x64 Ninja)",
   "inherits": [
     "debug-msvc2026-x64-ninja-generator",
-    "common-cache-qt6-install-path"
+    "common-qt6-path"
   ]
 }
 ```
 
 - **Multiple Inheritance (`inherits`)**:
-  1. **Shared Project Settings** (`debug-msvc2026-x64-ninja-generator` from `CMakePresets.json`): Inherits compiler flags, MSVC environment, generator (`Ninja`), and build type (`Debug`).
-  2. **Local Machine Settings** (`common-cache-qt6-install-path`): Injects the developer's local `Qt6_DIR` and demo install directory.
+  1. **Shared Project Settings** (`debug-msvc2026-x64-ninja-generator` from `CMakePresets.json`): Inherits compiler flags, MSVC environment, generator (`Ninja`), `binaryDir`, `installDir`, and build type (`Debug`).
+  2. **Local Machine Settings** (`common-qt6-path`): Injects the developer's local `Qt6_DIR`.
 
 ---
 
@@ -211,45 +215,40 @@ Build presets automate invoking the build tool (`Ninja`) with predefined options
 
 ---
 
-## 4. Minimal Example: Quick-Start (MSVC & Linux GCC)
+## 3. Minimal Example: Quick-Start (MSVC & Linux GCC)
 
 If you only want a minimal `CMakeUserPresets.json` with just the essential Debug presets for Windows (MSVC) and Linux (GCC):
 
 ```json
 {
-  "version": 8,
+  "version": 10,
   "cmakeMinimumRequired": {
-    "major": 3,
-    "minor": 30,
+    "major": 4,
+    "minor": 0,
     "patch": 0
   },
   "configurePresets": [
     {
+      "name": "common-qt6-path",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_PREFIX_PATH": "$env{Qt6_DIR}"
+      }
+    },
+    {
       "name": "local-debug-msvc2026-x64-ninja-generator",
       "displayName": "Local Debug (MSVC 2026 x64 Ninja)",
-      "inherits": "debug-msvc2026-x64-ninja-generator",
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Windows"
-      },
-      "cacheVariables": {
-        "CMAKE_PREFIX_PATH": "$env{Qt6_DIR}",
-        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/${presetName}/install"
-      }
+      "inherits": [
+        "debug-msvc2026-x64-ninja-generator",
+        "common-qt6-path"
+      ]
     },
     {
       "name": "local-debug-gcc-x64-ninja-generator",
       "displayName": "Local Debug (GCC x64 Ninja)",
-      "inherits": "debug-gcc-x64-ninja-generator",
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Linux"
-      },
-      "cacheVariables": {
-        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/${presetName}/install"
-      }
+      "inherits": [
+        "debug-gcc-x64-ninja-generator"
+      ]
     }
   ],
   "buildPresets": [

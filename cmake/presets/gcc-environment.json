@@ -1,10 +1,16 @@
 {
-  "version": 8,
+  "version": 10,
   "configurePresets": [
     {
       "name": "abstract-gcc-x64",
+      "description": "Initializes GCC x64 compiler on Linux",
       "hidden": true,
-       "environment": {
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "environment": {
         "CFLAGS": "-m64",
         "CXXFLAGS": "-m64",
         "LDFLAGS": "-m64"
@@ -13,7 +19,6 @@
         "CMAKE_C_COMPILER": "gcc",
         "CMAKE_CXX_COMPILER": "g++"
       }
-      
     }
   ]
 }
